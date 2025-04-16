@@ -1,0 +1,55 @@
+     program enshu3
+       implicit none
+      
+      integer::i , t, j , l, k, nseq
+      character(len=40),dimension(15)::name
+      integer, dimension(15,15)::sbst
+      real,dimension(15,15)::cdis=999.00
+      real,dimension(15,15)::dis
+      real,dimension(15)::mi,mimi
+     
+      read (*,'(i5)')nseq 
+      do i=1,nseq-1
+       do j=i+1,nseq
+       read(*,'(a40)')name(i)
+       read(*,'(a40)')name(j)
+       read(*,'(i5)')sbst(i,j)
+       read(*,'(f6.4)')dis(i,J)
+       read(*,'(f6.4)')cdis(i,j)
+      end do
+      end do
+      write(*,'(i5)')nseq
+      do k=1,nseq-1
+      mi(k)=minval(cdis)
+      mimi(k)=mi(k)/2
+      write(*,'(f6.4)')mimi(k)
+       do i=1,nseq-1
+        do j=i+1,nseq
+        if(cdis(i,j)==mi(k)) then  
+         write(*,"('step', i3 ,3X , a40 ,3x,a40)")k,name(i),name(j)
+         if(i/=1) then
+          do l=1,i-1
+         cdis(l,i)=(cdis(l,i)+cdis(l,j))/2
+         cdis(l,j)=999.00
+         end do
+         end if 
+        if(j/=nseq) then
+         do t=j+1,nseq
+         cdis(i,t)=(cdis(i,t)+cdis(j,t))/2
+         cdis(j,t)=999.00
+         end do
+         end if
+         do l=i+1,j-1
+         cdis(i,l)=(cdis(i,l)+cdis(l,j))/2
+         cdis(l,j)=999.00
+         end do
+         cdis(i,J)=999.00
+         goto 100
+         end if
+       end do
+       end do
+
+ 100     end do
+     
+      stop
+      end program enshu3
